@@ -14,7 +14,7 @@ foreach (var value in values)
     }
     else
     {
-        caloriesOfElf += int.Parse(value);
+        caloriesOfElf += long.Parse(value);
     }
 }
 Console.WriteLine($"Largest 1: {totalCaloriesPerElf.MaxBy(x => x)}");
