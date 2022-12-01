@@ -23,4 +23,4 @@ if (caloriesOfElf!=0)
     totalCaloriesPerElf.Add(caloriesOfElf);
 
 Console.WriteLine($"Largest 1: {totalCaloriesPerElf.Max()}");
-Console.WriteLine($"Largest 3: {totalCaloriesPerElf.OrderByDescending(x => x).Take(3).Sum()}");
+Console.WriteLine($"Largest 3: {totalCaloriesPerElf.OrderDescending().Take(3).Sum()}");
