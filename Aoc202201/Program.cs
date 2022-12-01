@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-var values = File.ReadAllLines(@"input.txt").ToList();
+var values = File.ReadAllLines(@"input.txt");
 
 var caloriesOfElf = 0L;
 var totalCaloriesPerElf = new List<long>();
