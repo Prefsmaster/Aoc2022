@@ -17,5 +17,5 @@ foreach (var value in values)
         caloriesOfElf += long.Parse(value);
     }
 }
-Console.WriteLine($"Largest 1: {totalCaloriesPerElf.MaxBy(x => x)}");
+Console.WriteLine($"Largest 1: {totalCaloriesPerElf.Max()}");
 Console.WriteLine($"Largest 3: {totalCaloriesPerElf.OrderByDescending(x => x).Take(3).Sum()}");
