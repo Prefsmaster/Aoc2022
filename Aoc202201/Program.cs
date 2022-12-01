@@ -17,7 +17,8 @@ foreach (var value in values)
         caloriesOfElf += long.Parse(value);
     }
 }
-// In case input file does not end with an empty line!
+// In case input file does not end with an empty line,
+// which was the case with my hand-crafted Test.txt
 if (caloriesOfElf!=0) 
     totalCaloriesPerElf.Add(caloriesOfElf);
 
