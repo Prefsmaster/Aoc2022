@@ -24,7 +24,7 @@ foreach (var game in instructions)
     // first transform to zero based index abc -> 012 xyz->012: 0 2
     // then add these = 2. then add another 2 = 4. 
     // take remainder of division by 3 = 1
-    // result: Opponents rock (A=0) must be beaten (X) by paper (B=2)
+    // result: Opponents rock (A=0) must be beaten (Z) by paper (B=2)
     // this works in all cases :-)
     var iMustPick = (opponent + me + 2) % 3;
     score2 += iMustPick + 1;
