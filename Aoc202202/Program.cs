@@ -1,22 +1,28 @@
 ﻿
 var instructions = File.ReadAllLines(@"input.txt");
 
-var score = 0;
+var score1 = 0;
+var score1b = 0;
 var score2 = 0;
 
 foreach (var game in instructions)
 {
-    var moves = game.Split(' ');
+    var opponent = game[0] - 'A';
+    var me = game[2] - 'X';
 
-    var opponent = moves[0][0] - 'A';
-    var me = moves[1][0] - 'X';
-    var iAmBeatenBy = (me + 1) % 3; // simple!!
-    
     // part 1
-    score += me + 1;
-    if (me == opponent) score += 3;
+    var iAmBeatenBy = (me + 1) % 3; // simple!!
+    score1 += me + 1;
+    if (me == opponent) score1 += 3;
     else
-        score += (opponent == iAmBeatenBy) ? 0 : 6;
+        if (opponent != iAmBeatenBy) score1 += 6;
+
+    // part 1b
+    // can also be done with a calculation!
+    // score for C Y (should be 6: Paper (me Y) loses from scissors (opponent C)
+    // again make zero-based then the formula: myscore = 2 *opponent + me + 1 %3 * 3 works.
+    // don't forget to add score for the chosen object as well:
+    score1b += me + 1 + (2*opponent + me + 1)%3 * 3;
 
     // part 2
     // What I should pick can be calculated with a simple formula
@@ -33,5 +39,6 @@ foreach (var game in instructions)
 
 }
 
-Console.WriteLine($"my score 1: {score}");
-Console.WriteLine($"my score 2: {score2}");
+Console.WriteLine($"my score 1 : {score1}");
+Console.WriteLine($"my score 1b: {score1b}");
+Console.WriteLine($"my score 2 : {score2}");
