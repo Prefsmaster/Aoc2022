@@ -19,8 +19,9 @@ foreach (var game in instructions)
 
     // part 1b
     // can also be done with a calculation!
-    // score for C Y (should be 6: Paper (me Y) loses from scissors (opponent C)
-    // again make zero-based then the formula: myscore = 2 *opponent + me + 1 %3 * 3 works.
+    // score for C Y (should be 0: Paper (me Y) loses from scissors (opponent C)
+    // again make zero-based then the formula: myscore = 2 *opponent + me + 1 %3 * 3 works:
+    // 2*2+1+1 = 6, 6%3 = 0, 0*3 = 0!
     // don't forget to add score for the chosen object as well:
     score1b += me + 1 + (2*opponent + me + 1)%3 * 3;
 
