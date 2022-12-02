@@ -20,7 +20,8 @@ foreach (var game in instructions)
 
     // part 2
     // What I should pick can be calculated with a simple formula
-    // for example: A Z -> transform to zero based index abc -> 012 xyz->012: 0 2
+    // for example: A Z means pick paper to defeat rock...
+    // first transform to zero based index abc -> 012 xyz->012: 0 2
     // then add these = 2. then add another 2 = 4. 
     // take remainder of division by 3 = 1
     // result: Opponents rock (A=0) must be beaten (X) by paper (B=2)
