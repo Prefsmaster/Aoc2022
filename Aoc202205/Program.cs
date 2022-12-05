@@ -1,7 +1,7 @@
 ﻿var file = new StreamReader(@"input.txt");
 
 var stacks = PrepStacks(file); // returns stacks in wrong(reversed) order!
-// reverse and make 2 copies
+// reverse and make 2 copies. initializing a stack with a stack reverses the source!
 var stacks1 = stacks.Select(s => new Stack<char>(s)).ToList();
 var stacks2 = stacks.Select(s => new Stack<char>(s)).ToList();
 
