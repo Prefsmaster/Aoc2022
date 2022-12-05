@@ -4,16 +4,18 @@ var result2 = 0;
 foreach (var assignment in assignments)
 {
     var parts = assignment.Split(',');
-    var bounds1 = parts[0].Split('-').Select(int.Parse).ToArray();
-    var bounds2 = parts[1].Split('-').Select(int.Parse).ToArray();
-    var range1 = Enumerable.Range(bounds1[0], bounds1[1] - bounds1[0] + 1);
-    var range2 = Enumerable.Range(bounds2[0], bounds2[1] - bounds2[0] + 1);
+    var ranges = new IEnumerable<int>[2];
+    for (var i = 0; i < 2; i++)
+    {
+        var bounds = parts[i].Split('-').Select(int.Parse).ToArray();
+        ranges[i] = Enumerable.Range(bounds[0], bounds[1] - bounds[0] + 1);
+    }
 
-    var intersection = range1.Intersect(range2);
+    var intersection = ranges[0].Intersect(ranges[1]);
     if (intersection.Any())
     {
         result2++;
-        if (intersection.SequenceEqual(range1) || intersection.SequenceEqual(range2))
+        if (intersection.SequenceEqual(ranges[0]) || intersection.SequenceEqual(ranges[1]))
             result1++;
     }
 }
