@@ -9,22 +9,24 @@ foreach (var s in stacks)
     stacks1.Add(new Stack<char>(s)); // initializing with a stack reverses order 
     stacks2.Add(new Stack<char>(s)); // because it uses pop source-push destination
 }
+// skip empty line
+file.ReadLine();
 // process instructions
 string? instruction;
 while (!string.IsNullOrEmpty(instruction = file.ReadLine())) 
 {
     var components = instruction.Split(" ");
-    // part1
+    var tempStack = new Stack<char>();
+
     for (var moves = 0; moves < int.Parse(components[1]); moves++)
     {
-        stacks1[int.Parse(components[5])-1].Push(stacks1[int.Parse(components[3])-1].Pop());
+        stacks1[int.Parse(components[5])-1].Push(stacks1[int.Parse(components[3])-1].Pop()); // part1 move directly
+        tempStack.Push(stacks2[int.Parse(components[3]) - 1].Pop()); // part2 use intermediate stack :-)
     }
-    // part2 use intermediate stack :-)
-    var tempStack = new Stack<char>();
     for (var moves = 0; moves < int.Parse(components[1]); moves++)
-        tempStack.Push(stacks2[int.Parse(components[3]) - 1].Pop());
-    for (var moves = 0; moves < int.Parse(components[1]); moves++)
-        stacks2[int.Parse(components[5]) - 1].Push(tempStack.Pop());
+    {
+        stacks2[int.Parse(components[5]) - 1].Push(tempStack.Pop());     // part2 move intermediate stack to destination
+    }
 }
 
 stacks1.ForEach(c => Console.Write(c.Peek()));
@@ -50,9 +52,6 @@ static Stack<char>[] PrepStacks(StreamReader file)
 
         data = file.ReadLine();
     } while (data[1] != '1');
-
-    file.ReadLine();
-
     return stackList.ToArray();
 }
 
