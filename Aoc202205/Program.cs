@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-var file = new StreamReader(@"input.txt");
+﻿var file = new StreamReader(@"input.txt");
 
 var stacks = PrepStacks(file); // returns stacks in wrong(reversed) order!
 // reverse and make 2 copies
@@ -12,8 +10,8 @@ foreach (var s in stacks)
     stacks2.Add(new Stack<char>(s)); // because it uses pop source-push destination
 }
 // process instructions
-var instruction = file.ReadLine();
-do
+string instruction;
+while (!string.IsNullOrEmpty(instruction = file.ReadLine())) 
 {
     var components = instruction.Split(" ");
     // part1
@@ -27,9 +25,7 @@ do
         tempStack.Push(stacks2[int.Parse(components[3]) - 1].Pop());
     for (var moves = 0; moves < int.Parse(components[1]); moves++)
         stacks2[int.Parse(components[5]) - 1].Push(tempStack.Pop());
-
-    instruction = file.ReadLine();
-} while (!string.IsNullOrEmpty(instruction));
+}
 
 printTopOfStack(stacks1);
 printTopOfStack(stacks2);
