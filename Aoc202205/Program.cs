@@ -10,7 +10,7 @@ foreach (var s in stacks)
     stacks2.Add(new Stack<char>(s)); // because it uses pop source-push destination
 }
 // process instructions
-string instruction;
+string? instruction;
 while (!string.IsNullOrEmpty(instruction = file.ReadLine())) 
 {
     var components = instruction.Split(" ");
@@ -27,23 +27,25 @@ while (!string.IsNullOrEmpty(instruction = file.ReadLine()))
         stacks2[int.Parse(components[5]) - 1].Push(tempStack.Pop());
 }
 
-printTopOfStack(stacks1);
-printTopOfStack(stacks2);
+stacks1.ForEach(c => Console.Write(c.Peek()));
+Console.WriteLine();
+stacks2.ForEach(c => Console.Write(c.Peek()));
+Console.WriteLine();
 
 static Stack<char>[] PrepStacks(StreamReader file)
 {
-    var stacklist = new List<Stack<char>>();
+    var stackList = new List<Stack<char>>();
     var data = file.ReadLine();
-    var stacks = data.Length/4+1;
-    for (var i=0;i<stacks;i++)
-        stacklist.Add(new Stack<char>());
+    var numberOfStacks = data.Length/4+1;
+    for (var i=0;i< numberOfStacks; i++)
+        stackList.Add(new Stack<char>());
 
     do
     {
-        for (var i = 0; i < stacks; i++)
+        for (var i = 0; i < numberOfStacks; i++)
         {
-            if (data[1 + i * 4] != ' ')
-                stacklist[i].Push(data[i * 4 + 1]);
+            if (data[i * 4 + 1] != ' ')
+                stackList[i].Push(data[i * 4 + 1]);
         }
 
         data = file.ReadLine();
@@ -51,14 +53,6 @@ static Stack<char>[] PrepStacks(StreamReader file)
 
     file.ReadLine();
 
-    return stacklist.ToArray();
+    return stackList.ToArray();
 }
 
-static void printTopOfStack(List<Stack<char>> stack)
-{
-    foreach (var c in stack)
-    {
-        Console.Write(c.Peek());
-    }
-    Console.WriteLine();
-}
