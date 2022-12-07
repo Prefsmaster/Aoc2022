@@ -17,12 +17,11 @@ static DirItem ProcessCommands(string[] commands)
         if (command[0]=='$')
         {
             if (command[2] != 'c') continue; // only cd does something, rest can be skipped
-            var dest = command.Substring(5);
-            currentdir = dest switch
+            currentdir = command[5..] switch
             {
                 "/" => root,
                 ".." => currentdir?.Parent,
-                _ => currentdir?.Items.Single(i => i.Name == dest)
+                _ => currentdir?.Items.Single(i => i.Name == command[5..])
             };
         }
         else // add new item (dir or file) to list
