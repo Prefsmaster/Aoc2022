@@ -8,26 +8,26 @@ Console.WriteLine(dirTree.FilterDirectories(item => item.Size <= 100_000).Sum(c 
 // this can be simplified to: size of root - 40000000
 Console.WriteLine(dirTree.FilterDirectories(item => item.Size >= dirTree.Size - 40000000L).Min(c => c.Size));
 
-static DirItem BuildDirectoryTreeFromConsoleLog(string[] commands)
+static DirItem BuildDirectoryTreeFromConsoleLog(string[] logLines)
 {
     var root = new DirItem(null, "/");
     var currentDir = root;
-    foreach(var command in commands)
+    foreach(var logLine in logLines)
     {
-        if (command[0]=='$')
+        if (logLine[0]=='$') // process command
         {
-            if (command[2] != 'c') continue; // only cd does something, rest can be skipped
-            currentDir = command[5..] switch
+            if (logLine[2] != 'c') continue; // only cd does something, rest (ls) can be skipped
+            currentDir = logLine[5..] switch
             {
                 "/" => root,
                 ".." => currentDir?.Parent,
-                _ => currentDir?.Items.Single(i => i.Name == command[5..])
+                _ => currentDir?.Items.Single(i => i.Name == logLine[5..])
             };
         }
-        else // add new item (dir or file) to list
+        else // process dir or file
         {
-            var parts = command.Split(' ');
-            currentDir?.Items.Add(new DirItem(currentDir, parts[1], command[0] == 'd' ? -1: long.Parse(parts[0])));
+            var parts = logLine.Split(' ');
+            currentDir?.Items.Add(new DirItem(currentDir, parts[1], logLine[0] == 'd' ? -1: long.Parse(parts[0])));
         }
     }
     return root;
