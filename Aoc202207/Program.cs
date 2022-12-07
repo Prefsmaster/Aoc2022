@@ -25,12 +25,10 @@ static DirItem ProcessCommands(string[] commands)
                 _ => currentdir?.Items.Single(i => i.Name == dest)
             };
         }
-        else
+        else // add new item (dir or file) to list
         {
             var parts = command.Split(' ');
-            currentdir?.Items.Add(command[0] == 'd' 
-                ? new DirItem(currentdir, parts[1]) // add dir to list
-                : new DirItem(currentdir, parts[1], long.Parse(parts[0]))); // add file to list
+            currentdir?.Items.Add(new DirItem(currentdir, parts[1], command[0] == 'd' ? -1: long.Parse(parts[0])));
         }
     }
     return root;
