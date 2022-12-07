@@ -29,9 +29,5 @@
                 FilterItems(filter, subitem, candidates);
             }
         }
-
-        // attempt to use SelectMany, but does not work (yet) :-(
-        //var candidates1 = dirTree.Items.SelectMany(it=>it.Items).Where(it=> it.IsDir && it.Size<=100000).Sum(dir => dir.Size);
-
     }
 }

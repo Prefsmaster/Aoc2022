@@ -16,28 +16,21 @@ static DirItem ProcessCommands(string[] commands)
     {
         if (command[0]=='$')
         {
-            if (command[2]=='c') // only cd does something, rest can be skipped
+            if (command[2] != 'c') continue; // only cd does something, rest can be skipped
+            var dest = command.Substring(5);
+            currentdir = dest switch
             {
-                var dest = command.Substring(5);
-                currentdir = dest switch
-                {
-                    "/" => root,
-                    ".." => currentdir?.Parent,
-                    _ => currentdir?.Items.Single(i => i.Name == dest)
-                };
-            }
+                "/" => root,
+                ".." => currentdir?.Parent,
+                _ => currentdir?.Items.Single(i => i.Name == dest)
+            };
         }
         else
         {
-            if (command[0]=='d')  // add dir to list
-            {
-                currentdir?.Items.Add(new DirItem(currentdir, command.Substring(4)));
-            }
-            else                 // add file to list
-            {
-                var parts = command.Split(' ');
-                currentdir?.Items.Add(new DirItem(currentdir, parts[1], long.Parse(parts[0])));
-            }
+            var parts = command.Split(' ');
+            currentdir?.Items.Add(command[0] == 'd' 
+                ? new DirItem(currentdir, parts[1]) // add dir to list
+                : new DirItem(currentdir, parts[1], long.Parse(parts[0]))); // add file to list
         }
     }
     return root;
