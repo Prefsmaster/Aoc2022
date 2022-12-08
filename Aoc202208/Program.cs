@@ -7,11 +7,17 @@ var fieldSide = treeField[0].Length-1; // -1 used most, <= used where full side 
 var visibleTrees = 0L;
 var highestScore = 0L;
 for (var y = 0; y <= fieldSide; y++)
+{
     for (var x = 0; x <= fieldSide; x++)
     {
-        if (TreeVisibleFromEdge(y, x)) visibleTrees++;
+        var visible = TreeVisibleFromEdge(y, x);
+        if (visible) visibleTrees++;
+        Console.Write(visible?"@":" ");
         highestScore = Math.Max(VisibleTreeScore(y, x), highestScore);
     }
+    Console.WriteLine();
+}
+
 Console.WriteLine(visibleTrees);
 Console.WriteLine(highestScore);
 
