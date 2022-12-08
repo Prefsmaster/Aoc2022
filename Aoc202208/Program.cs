@@ -43,10 +43,10 @@ int GetVisibleTrees(int y, int x, int dy, int dx, bool part2 = false)
     var length = 0;
     while (y > 0 && y < fieldSide && x > 0 && x < fieldSide)
     {
-        if (part2) length++; // part 2 preincrement: always 1 tree!
+        if (part2) length++; // part 2 pre-increment: always 1 tree!
         x += dx; y += dy;
         if (treeField[y][x] >= highest) break;
-        if(!part2) length++; // part 1 only count when lower!
+        if(!part2) length++; // part 1 post-increment: count only when actually lower!
     }
     return length;
 }
