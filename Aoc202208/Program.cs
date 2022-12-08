@@ -1,59 +1,46 @@
-﻿var treeField = File.ReadAllLines(@"input.txt").ToArray();
-var fieldSide = treeField[0].Length;
+﻿using System.Security.Cryptography.X509Certificates;
+
+var treeField = File.ReadAllLines(@"input.txt").ToArray();
+var fieldSide = treeField[0].Length-1; // -1 used most, <= used where full side is needed!
 
 // Part 1
-var visibleGrid = new bool[fieldSide*fieldSide];
-for (var vec = 1; vec < fieldSide - 1; vec++)
-{
-    SetVisibility(0, vec, 1, 0);
-    SetVisibility(fieldSide - 1, vec, -1, 0);
-    SetVisibility(vec, 0, 0, 1);
-    SetVisibility(vec, fieldSide - 1, 0, -1);
-}
-Console.WriteLine(visibleGrid.Count(g => g)+fieldSide*4-4);
-
-// Part 2
+var visibleTrees = 0L;
 var highestScore = 0L;
-for (var y = 1; y < fieldSide - 1; y++)
-    for (var x = 1; x < fieldSide - 1; x++)
+for (var y = 0; y <= fieldSide; y++)
+    for (var x = 0; x <= fieldSide; x++)
     {
-        var score = VisibleTreeScore(y, x);
-        if (score > highestScore)
-            highestScore = score;
+        if (TreeVisibleFromEdge(y, x)) visibleTrees++;
+        highestScore = Math.Max(VisibleTreeScore(y, x), highestScore);
     }
+Console.WriteLine(visibleTrees);
 Console.WriteLine(highestScore);
 
-void SetVisibility(int y, int x, int dy, int dx)
+bool TreeVisibleFromEdge(int sy, int sx)
 {
-    var highest = treeField[y][x];
-    do
-    {
-        x += dx;
-        y += dy;
-        if (treeField[y][x] <= highest) continue;
-        highest = treeField[y][x];
-        visibleGrid[y * fieldSide + x] = true;
-    } while (y > 0 && y < fieldSide - 1 && x > 0 && x < fieldSide - 1);
+    return GetVisibleTrees(sy, sx, -1, 0) == sy ||
+           GetVisibleTrees(sy, sx, 1, 0) == (fieldSide - sy) ||
+           GetVisibleTrees(sy, sx, 0, -1) == sx ||
+           GetVisibleTrees(sy, sx, 0, 1) == (fieldSide - sx);
 }
-
 
 long VisibleTreeScore(int sy, int sx)
 {
-    return GetVisibleTrees(sy, sx, -1, 0) * 
-           GetVisibleTrees(sy, sx, 1, 0) * 
-           GetVisibleTrees(sy, sx, 0, -1) * 
-           GetVisibleTrees(sy, sx, 0, 1);
+    return GetVisibleTrees(sy, sx, -1, 0, true) * 
+           GetVisibleTrees(sy, sx, 1, 0, true) * 
+           GetVisibleTrees(sy, sx, 0, -1, true) * 
+           GetVisibleTrees(sy, sx, 0, 1, true);
 }
 
-int GetVisibleTrees(int y, int x, int dy, int dx)
+int GetVisibleTrees(int y, int x, int dy, int dx, bool part2 = false)
 {
     var highest = treeField[y][x];
     var length = 0;
-    do
+    while (y > 0 && y < fieldSide && x > 0 && x < fieldSide)
     {
-        length++; // always 1 tree!
+        if (part2) length++; // part 2 preincrement: always 1 tree!
         x += dx; y += dy;
         if (treeField[y][x] >= highest) break;
-    } while (y > 0 && y < fieldSide - 1 && x > 0 && x < fieldSide - 1);
+        if(!part2) length++; // part 1 only count when lower!
+    }
     return length;
 }
