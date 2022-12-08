@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-var treeField = File.ReadAllLines(@"input.txt").ToArray();
+﻿var treeField = File.ReadAllLines(@"input.txt").ToArray();
 var fieldSide = treeField[0].Length-1; // -1 used most, <= used where full side is needed!
 
 // Part 1
@@ -17,7 +15,6 @@ for (var y = 0; y <= fieldSide; y++)
     }
     Console.WriteLine();
 }
-
 Console.WriteLine(visibleTrees);
 Console.WriteLine(highestScore);
 
@@ -43,10 +40,10 @@ int GetVisibleTrees(int y, int x, int dy, int dx, bool part2 = false)
     var length = 0;
     while (y > 0 && y < fieldSide && x > 0 && x < fieldSide)
     {
-        if (part2) length++; // part 2 pre-increment: always 1 tree!
         x += dx; y += dy;
+        if (part2) length++; // part 2 can increment pre test: always 1 tree!
         if (treeField[y][x] >= highest) break;
-        if(!part2) length++; // part 1 post-increment: count only when actually lower!
+        if(!part2) length++; // part 1 must increment post test: count only when actually lower!
     }
     return length;
 }
