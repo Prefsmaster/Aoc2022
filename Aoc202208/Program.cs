@@ -51,15 +51,9 @@ int GetVisibleTrees(int y, int x, int dy, int dx)
     var length = 0;
     do
     {
-        x += dx;
-        y += dy;
-        if (treeField[y][x] < highest)
-        {
-            length++;
-            continue;
-        }
-        if (length > 0) length++;
-        break;
+        length++; // always 1 tree!
+        x += dx; y += dy;
+        if (treeField[y][x] >= highest) break;
     } while (y > 0 && y < fieldSide - 1 && x > 0 && x < fieldSide - 1);
     return length;
 }
