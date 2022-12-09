@@ -10,7 +10,7 @@ for (var y = 0; y <= fieldSide; y++)
     {
         var visible = TreeVisibleFromEdge(y, x);
         if (visible) visibleTrees++;
-        Console.Write(visible?"@":" ");
+        Console.Write(visible?$"{treeField[y][x]}":" ");
         highestScore = Math.Max(VisibleTreeScore(y, x), highestScore);
     }
     Console.WriteLine();
