@@ -29,8 +29,8 @@ int SolveDay9(int numberOfKnots, string[] instructions)
             knots[numberOfKnots-1] += move[direction];
 
             var knotToMove = numberOfKnots - 2;
-            var tailMoved = false;
-            while(knotToMove >= 0)
+            var tailMoved = true;
+            while(tailMoved && knotToMove >= 0)
                 tailMoved = MoveKnotTowardTarget(knotToMove--);
 
             if (tailMoved && !visited.Contains(knots[0]))
