@@ -30,13 +30,10 @@ int SolveDay9(int numberOfKnots, string[] instructions)
 
             var knotToMove = numberOfKnots - 2;
             var tailMoved = false;
-
             while(knotToMove >= 0)
                 tailMoved = MoveKnotTowardTarget(knotToMove--);
 
-            if (!tailMoved) continue;
-
-            if (!visited.Contains(knots[0]))
+            if (tailMoved && !visited.Contains(knots[0]))
                 visited.Add(knots[0]);
         }
     }
@@ -47,7 +44,7 @@ bool MoveKnotTowardTarget(int knot)
 {
     var delta = knots[knot+1] - knots[knot];
 
-    if (!(Math.Abs(delta.X) > 1) && !(Math.Abs(delta.Y) > 1)) return false;
+    if (Math.Abs(delta.X) < 2 && Math.Abs(delta.Y) < 2) return false;
 
     if (Math.Abs(delta.X) > 1) delta.X /= 2;
     if (Math.Abs(delta.Y) > 1) delta.Y /= 2;
