@@ -8,15 +8,10 @@ long answer = 0;
 
 foreach (var instruction in puzzleInput)
 {
-    if (instruction[0] == 'n')
+    UpdateAnswer(++CPUcycle);
+    UpdateCrt(CRTcycle++);
+    if (instruction[0] != 'n')
     {
-        UpdateAnswer(++CPUcycle);
-        UpdateCrt(CRTcycle++);
-    }
-    else
-    {
-        UpdateAnswer(++CPUcycle);
-        UpdateCrt(CRTcycle++);
         UpdateCrt(CRTcycle++);
         RegisterX += int.Parse(instruction[5..]);
         UpdateAnswer(++CPUcycle);
