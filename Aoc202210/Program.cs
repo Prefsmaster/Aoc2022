@@ -27,9 +27,7 @@ Console.WriteLine(answer);
 void UpdateAnswer(int cycleCounter)
 {
     if (cycleCounter is >= 20 and <= 220 && ((cycleCounter-20) % 40 == 0))
-    {
         answer += RegisterX * cycleCounter;
-    }
 }
 
 void UpdateCrt(int cycleCounter)
